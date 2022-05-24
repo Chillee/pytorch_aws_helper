@@ -10,14 +10,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:pytorch-aws-scratch-helper.allocateServer"
+		"onCommand:pytorch-aws-scratch-helper.allocateServer",
+		"onCommand:pytorch-aws-scratch-helper.freshEnv"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "pytorch-aws-scratch-helper.allocateServer",
-				"title": "Allocates SSH Server"
+				"title": "Salloc Server"
+			},
+			{
+				"command": "pytorch-aws-scratch-helper.freshEnv",
+				"title": "Create Fresh Environment"
 			}
 		]
 	},
