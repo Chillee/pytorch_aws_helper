@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 		terminal.show(true);
 		terminal.sendText(`ssh -t compile_machine '/fsx/users/chilli/bin/backup.sh'`);
 	}));
-	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.startAutoBackup', () => {
+	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.autoBackup', () => {
 		const terminal = vscode.window.createTerminal("Auto Backup");
 		terminal.show(true);
 		terminal.sendText(`ssh -t compile_machine '/fsx/users/chilli/bin/autobackup.sh'`);
