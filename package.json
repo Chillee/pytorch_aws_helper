@@ -20,14 +20,15 @@
 		"onCommand:pytorch-aws-scratch-helper.initScratch",
 		"onCommand:pytorch-aws-scratch-helper.runBackup",
 		"onCommand:pytorch-aws-scratch-helper.autoBackup",
-		"onCommand:pytorch-aws-scratch-helper.clearTmux"
+		"onCommand:pytorch-aws-scratch-helper.clearTmux",
+		"onCommand:pytorch-aws-scratch-helper.setLoginNode"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "pytorch-aws-scratch-helper.allocateServer",
-				"title": "PyTorch AWS: Allocate Compute Node"
+				"title": "PyTorch AWS: Allocate Compile Node"
 			},
 			{
 				"command": "pytorch-aws-scratch-helper.initScratch",
@@ -44,8 +45,30 @@
 			{
 				"command": "pytorch-aws-scratch-helper.clearTmux",
 				"title": "PyTorch AWS: Clear Tmux"
+			},
+			{
+				"command": "pytorch-aws-scratch-helper.setLoginNode",
+				"title": "PyTorch AWS: Set Login Node Address"
 			}
-		]
+		],
+
+		"configuration": {
+			"title": "Pytorch AWS Scratch Helper",
+			"properties": {
+			  "pytorch-aws-scratch-helper.loginNode": {
+				"type": "string",
+				"default": "f392b7dc-4dec-47a7-8887-9bcd206c4a79",
+				"description": "The ssh address for the login node."
+			  },
+			  "pytorch-aws-scratch-helper.homeDirectory": {
+				"type": "string",
+				"default": "work",
+				"description": "The name of your home directory in the scratch space."
+			  }
+			}
+		  }
+
+
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
