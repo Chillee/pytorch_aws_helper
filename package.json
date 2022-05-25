@@ -11,18 +11,33 @@
 	],
 	"activationEvents": [
 		"onCommand:pytorch-aws-scratch-helper.allocateServer",
-		"onCommand:pytorch-aws-scratch-helper.freshEnv"
+		"onCommand:pytorch-aws-scratch-helper.initScratch",
+		"onCommand:pytorch-aws-scratch-helper.runBackup",
+		"onCommand:pytorch-aws-scratch-helper.autoBackup",
+		"onCommand:pytorch-aws-scratch-helper.clearTmux"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "pytorch-aws-scratch-helper.allocateServer",
-				"title": "Salloc Server"
+				"title": "PyTorch AWS: Allocate Compute Node"
 			},
 			{
-				"command": "pytorch-aws-scratch-helper.freshEnv",
-				"title": "Create Fresh Environment"
+				"command": "pytorch-aws-scratch-helper.initScratch",
+				"title": "PyTorch AWS: Initialize Scratch Space"
+			},
+			{
+				"command": "pytorch-aws-scratch-helper.runBackup",
+				"title": "PyTorch AWS: Run Backup"
+			},
+			{
+				"command": "pytorch-aws-scratch-helper.autoBackup",
+				"title": "PyTorch AWS: Auto Backup"
+			},
+			{
+				"command": "pytorch-aws-scratch-helper.clearTmux",
+				"title": "PyTorch AWS: Clear Tmux"
 			}
 		]
 	},
