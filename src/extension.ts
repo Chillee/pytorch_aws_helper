@@ -5,7 +5,7 @@ import * as cp from 'child_process';
 import * as fs from 'fs';
 import * as process from 'process';
 
-const AWS_CLUSTER = 'f392b7dc-4dec-47a7-8887-9bcd206c4a79';
+let AWS_CLUSTER = 'f392b7dc-4dec-47a7-8887-9bcd206c4a79';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -49,6 +49,17 @@ export function activate(context: vscode.ExtensionContext) {
 		const serverNumber = parseInt(searchQuery);
 		terminal.sendText(`ssh -t ${AWS_CLUSTER} 'tmux new "/opt/slurm/bin/salloc -p dev -G 1 -t 5:00:00 -w a100-st-p4d24xlarge-${serverNumber} --exclusive"'`);
 		cp.execSync(`echo ${serverNumber} > ~/.ssh/ai_ssh/$USER/number.txt`);
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.setLoginNode', async () => {
+		let previous_val = AWS_CLUSTER;
+		const userInput = await vscode.window.showInputBox({
+			value: previous_val,
+			prompt: "Caution: Are you sure this needs to change? Enter the ssh address of the login node.",
+		  });
+		if (userInput === undefined) {
+			throw "Didn't add an address.";
+		}
+		AWS_CLUSTER = userInput;
 	}));
 }
 

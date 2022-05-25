@@ -20,14 +20,15 @@
 		"onCommand:pytorch-aws-scratch-helper.initScratch",
 		"onCommand:pytorch-aws-scratch-helper.runBackup",
 		"onCommand:pytorch-aws-scratch-helper.autoBackup",
-		"onCommand:pytorch-aws-scratch-helper.clearTmux"
+		"onCommand:pytorch-aws-scratch-helper.clearTmux",
+		"onCommand:pytorch-aws-scratch-helper.setLoginNode"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "pytorch-aws-scratch-helper.allocateServer",
-				"title": "PyTorch AWS: Allocate Compute Node"
+				"title": "PyTorch AWS: Allocate Compile Node"
 			},
 			{
 				"command": "pytorch-aws-scratch-helper.initScratch",
@@ -44,6 +45,10 @@
 			{
 				"command": "pytorch-aws-scratch-helper.clearTmux",
 				"title": "PyTorch AWS: Clear Tmux"
+			},
+			{
+				"command": "pytorch-aws-scratch-helper.setLoginNode",
+				"title": "PyTorch AWS: Set Login Node Address"
 			}
 		]
 	},
