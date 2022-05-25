@@ -5,8 +5,6 @@ import * as cp from 'child_process';
 import * as fs from 'fs';
 import * as process from 'process';
 
-let AWS_CLUSTER = 'f392b7dc-4dec-47a7-8887-9bcd206c4a79';
-
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -26,11 +24,13 @@ export function activate(context: vscode.ExtensionContext) {
 		terminal.sendText(`ssh -t compile_machine '/fsx/users/chilli/bin/autobackup.sh'`);
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.clearTmux', () => {
+		let config = vscode.workspace.getConfiguration('pytorch-aws-scratch-helper');
 		const terminal = vscode.window.createTerminal("Clearing Tmux");
 		terminal.show(true);
-		terminal.sendText(`ssh -t ${AWS_CLUSTER} 'tmux kill-server'`);
+		terminal.sendText(`ssh -t ${config.loginNode} 'tmux kill-server'`);
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.allocateServer', async () => {
+		let config = vscode.workspace.getConfiguration('pytorch-aws-scratch-helper');
 		const path = `${process.env.HOME!.trim()}/.ssh/ai_ssh/${process.env.USER!.trim()}/number.txt`;
 		let previous_val = undefined;
 		if (fs.existsSync(path)) {
@@ -47,19 +47,8 @@ export function activate(context: vscode.ExtensionContext) {
 		const terminal = vscode.window.createTerminal("Allocating compute node");
 		terminal.show(true);
 		const serverNumber = parseInt(searchQuery);
-		terminal.sendText(`ssh -t ${AWS_CLUSTER} 'tmux new "/opt/slurm/bin/salloc -p dev -G 1 -t 5:00:00 -w a100-st-p4d24xlarge-${serverNumber} --exclusive"'`);
+		terminal.sendText(`ssh -t ${config.loginNode} 'tmux new "/opt/slurm/bin/salloc -p dev -G 1 -t 5:00:00 -w a100-st-p4d24xlarge-${serverNumber} --exclusive"'`);
 		cp.execSync(`echo ${serverNumber} > ~/.ssh/ai_ssh/$USER/number.txt`);
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.setLoginNode', async () => {
-		let previous_val = AWS_CLUSTER;
-		const userInput = await vscode.window.showInputBox({
-			value: previous_val,
-			prompt: "Caution: Are you sure this needs to change? Enter the ssh address of the login node.",
-		  });
-		if (userInput === undefined) {
-			throw "Didn't add an address.";
-		}
-		AWS_CLUSTER = userInput;
 	}));
 }
 
