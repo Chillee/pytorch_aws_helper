@@ -8,7 +8,18 @@ import * as process from 'process';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.createWorkspace', () => {
+		let config = vscode.workspace.getConfiguration('pytorch-aws-scratch-helper');
+		const terminal = vscode.window.createTerminal("Creating Workspace");
+		terminal.show(true);
+		let inner_dir_command = `export INNER_DIR=${config.workDirectory}`;
+		let env_name_command = `export ENV_NAME=${config.envName}`;
+		let shell_command = `/fsx/users/drisspg/bin/init_workspace.sh`;
+		let final_command = `ssh -t compile_machine '${inner_dir_command} && ${env_name_command} && ${shell_command}'`;
+		terminal.sendText(final_command);
+	}));
 	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.initScratch', () => {
+		let config = vscode.workspace.getConfiguration('pytorch-aws-scratch-helper');
 		const terminal = vscode.window.createTerminal("Initializing Scratch Space");
 		terminal.show(true);
 		terminal.sendText(`ssh -t compile_machine '/fsx/users/chilli/bin/init_scratch.sh'`);
