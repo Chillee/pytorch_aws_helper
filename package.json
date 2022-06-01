@@ -21,7 +21,9 @@
 		"onCommand:pytorch-aws-scratch-helper.runBackup",
 		"onCommand:pytorch-aws-scratch-helper.autoBackup",
 		"onCommand:pytorch-aws-scratch-helper.clearTmux",
-		"onCommand:pytorch-aws-scratch-helper.setLoginNode"
+		"onCommand:pytorch-aws-scratch-helper.setLoginNode",
+		"onCommand:pytorch-aws-scratch-helper.createWorkspace"
+
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -49,6 +51,10 @@
 			{
 				"command": "pytorch-aws-scratch-helper.setLoginNode",
 				"title": "PyTorch AWS: Set Login Node Address"
+			},
+			{
+				"command": "pytorch-aws-scratch-helper.createWorkspace",
+				"title": "PyTorch AWS: Create Workspace"
 			}
 		],
 
@@ -60,10 +66,25 @@
 				"default": "f392b7dc-4dec-47a7-8887-9bcd206c4a79",
 				"description": "The ssh address for the login node."
 			  },
-			  "pytorch-aws-scratch-helper.homeDirectory": {
+			  "pytorch-aws-scratch-helper.workDirectory": {
 				"type": "string",
 				"default": "work",
-				"description": "The name of your home directory in the scratch space."
+				"description": "The name of your working directory in the scratch space."
+			  },
+			  "pytorch-aws-scratch-helper.condaEnvName": {
+				"type": "string",
+				"default": "env",
+				"description": "The name of the conda environment made on init workspace."
+			  },
+			  "pytorch-aws-scratch-helper.scriptDirectory": {
+				"type": "string",
+				"default": "/fsx/users/chilli/bin",
+				"description": "The directory on the cluster containing the different bash scripts."
+			  },
+			  "pytorch-aws-scratch-helper.sallocArgs": {
+				"type": "string",
+				"default": "--exclusive -G 1 -t 5:00:00",
+				"description": "The arguments to be passed to salloc for configuring resource requests."
 			  }
 			}
 		  }
