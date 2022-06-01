@@ -8,21 +8,22 @@ import * as process from 'process';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.initScratch', () => {
-		const terminal = vscode.window.createTerminal("Initializing Scratch Space");
-		terminal.show(true);
-		terminal.sendText(`ssh -t compile_machine '/fsx/users/chilli/bin/init_scratch.sh'`);
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.runBackup', () => {
-		const terminal = vscode.window.createTerminal("Backup");
-		terminal.show(true);
-		terminal.sendText(`ssh -t compile_machine '/fsx/users/chilli/bin/backup.sh'`);
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.autoBackup', () => {
-		const terminal = vscode.window.createTerminal("Auto Backup");
-		terminal.show(true);
-		terminal.sendText(`ssh -t compile_machine '/fsx/users/chilli/bin/autobackup.sh'`);
-	}));
+	function create_ssh_command(terminal_name: string, script_path: string) {
+		let command_func = () => {
+			const terminal = vscode.window.createTerminal(terminal_name);
+			terminal.show(true);
+			terminal.sendText(`ssh -t compile_machine 'BASH_ENV=$HOME/.bashrc_non_interactive ${script_path}'`);
+		}
+		return command_func;
+	}
+	let script_commands = [
+		['pytorch-aws-scratch-helper.initScratch', "Initializing Scratch Space", "/fsx/users/chilli/bin/init_scratch.sh"],
+		['pytorch-aws-scratch-helper.runBackup', "Backup", "/fsx/users/chilli/bin/backup.sh"],
+		['pytorch-aws-scratch-helper.autoBackup', "Auto Backup", "/fsx/users/chilli/bin/autobackup.sh"],
+	];
+	for (let [command_name, terminal_name, script_path] of script_commands) {
+		context.subscriptions.push(vscode.commands.registerCommand(command_name, create_ssh_command(terminal_name, script_path)));
+	}
 	context.subscriptions.push(vscode.commands.registerCommand('pytorch-aws-scratch-helper.clearTmux', () => {
 		let config = vscode.workspace.getConfiguration('pytorch-aws-scratch-helper');
 		const terminal = vscode.window.createTerminal("Clearing Tmux");
