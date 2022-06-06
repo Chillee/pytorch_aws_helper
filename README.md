@@ -2,6 +2,8 @@
 
 Makes working with a "Scratch-Space" Workflow with VSCode easy
 
+## Installation
+Simply install this extension like you would any other VSCode extension. Go to the extension tab of VSCode, search up "PyTorch AWS", and install the extension. Also check out the extension [here](https://marketplace.visualstudio.com/items?itemName=chillee.pytorch-aws-scratch-helper).
 
 ## Workflow
 The typical workflow for working with the AI Platform AWS GPU Cluster can be
