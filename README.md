@@ -34,11 +34,14 @@ If this is your first time using this workflow then the initializing of the work
 4. You have finished writing all your opinfos and want to free up your resources. Run `Clear Tmux` this will end the tmux session that is keeping your salloc alive and free up your resources.  If something does not work right you can always scancel your jobs to free up resources.
 
 ### Tips:
+1. **Important**: Use a local ccache instead of the shared ccache (`export CCACHE_DIR='/tmp/ccache'`). As the shared ccache is on a network drive, enabling it slows my build by more than 2x (compared to not having a ccache at all!)
 1. If you use the same compute node, you won't need to run "initialize scratch space" again - as `/scratch` is usually persistent across multiple days.
 2. You'll need to run this extension's commands from a different VSCode session than the one connected through SSH. For some of the commands this is fundamental - you can't have a VSCode instance SSH'ed into the compute node if you haven't run `Allocate Compute Node` yet. For some of the others it's due to stupid reasons.
 3. As the SSH entry should automatically update what it's pointed to when this extension allocate another compute node, you should never need to add a new SSH entry to your VSCode instance. Just always connect to `compile_machine` and work on `/scratch/work/$USER/work`. Even if the underlying machine changes, the only thing that should change is what number you enter for `Allocate Compute Node`.
 4. This extension is largely a wrapper around a couple of shell scripts. If you prefer to run the shell scripts yourself, go ahead :)
 5. Another nifty command is `Auto Backup`, which automatically runs `Backup` every 30 minutes.
+
+
 ### Config
 Take a look at the extension settings for changing the salloc resource requests and other potentially helpful config settings.
 
