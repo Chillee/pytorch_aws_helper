@@ -2,7 +2,7 @@
 	"name": "pytorch-aws-scratch-helper",
 	"displayName": "PyTorch AWS Scratch Helper",
 	"description": "",
-	"version": "0.0.7",
+	"version": "0.0.9",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
@@ -83,7 +83,7 @@
 			  },
 			  "pytorch-aws-scratch-helper.sallocArgs": {
 				"type": "string",
-				"default": "--exclusive -G 1 -t 5:00:00",
+				"default": "-p dev --exclusive -G 1 -t 6:00:00",
 				"description": "The arguments to be passed to salloc for configuring resource requests."
 			  }
 			}
