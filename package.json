@@ -2,7 +2,7 @@
 	"name": "pytorch-aws-scratch-helper",
 	"displayName": "PyTorch AWS Scratch Helper",
 	"description": "",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
@@ -81,10 +81,10 @@
 				"default": "/fsx/users/chilli/bin",
 				"description": "The directory on the cluster containing the different bash scripts."
 			  },
-			  "pytorch-aws-scratch-helper.sallocArgs": {
+			  "pytorch-aws-scratch-helper.numGPU": {
 				"type": "string",
-				"default": "-p dev --exclusive -G 1 -t 6:00:00",
-				"description": "The arguments to be passed to salloc for configuring resource requests."
+				"default": "2",
+				"description": "The number of GPUs to allocate with slurm"
 			  }
 			}
 		  }

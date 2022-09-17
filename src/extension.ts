@@ -59,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const terminal = vscode.window.createTerminal("Allocating compute node");
 		terminal.show(true);
 		const serverNumber = parseInt(searchQuery);
-		terminal.sendText(`ssh -t ${config.loginNode} 'tmux new "/opt/slurm/bin/salloc -w a100-st-p4d24xlarge-${serverNumber} ${config.sallocArgs}"'`);
+		terminal.sendText(`ssh -t ${config.loginNode} 'tmux new "/opt/slurm/bin/salloc -w a100-st-p4d24xlarge-${serverNumber} -p dev --oversubscribe -n 96 -G ${config.numGPU} -t 336:00:00"'`);
 		cp.execSync(`echo ${serverNumber} > ~/.ssh/ai_ssh/$USER/number.txt`);
 	}));
 }
