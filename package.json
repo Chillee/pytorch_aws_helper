@@ -63,7 +63,7 @@
 			"properties": {
 			  "pytorch-aws-scratch-helper.loginNode": {
 				"type": "string",
-				"default": "f392b7dc-4dec-47a7-8887-9bcd206c4a79",
+				"default": "92732890-0458-4f76-8369-c4fee80b23e7",
 				"description": "The ssh address for the login node."
 			  },
 			  "pytorch-aws-scratch-helper.workDirectory": {
